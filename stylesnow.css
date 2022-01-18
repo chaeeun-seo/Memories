@@ -1,0 +1,12 @@
+html {
+  background-image: url("darkforest.jpg");
+  /* background-size: auto; */
+}
+
+body {
+  margin: 0;
+}
+
+canvas {
+  z-index: 2;
+}
