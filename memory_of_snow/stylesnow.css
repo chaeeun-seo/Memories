@@ -88,7 +88,7 @@ canvas {
 }
 
 .card-body {
-  color: rgb(255, 255, 255 / 0.85);
+  color: rgb(255 255 255 / 0.9);
 }
 
 @media (hover) {
