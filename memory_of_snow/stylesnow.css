@@ -3,10 +3,133 @@ html {
   /* background-size: auto; */
 }
 
+:root {
+  --clr-accent: #ffc75f;
+  --clr-neutral-light: white;
+  --clr-neutral-dark: black;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
 body {
   margin: 0;
 }
 
 canvas {
-  z-index: 2;
+  /* z-index: 2; */
+  position: absolute;
+}
+
+.card-container {
+  display: grid;
+  min-height: 100vh;
+  place-items: center;
+  line-height: 1.6;
+  font-family: sans-serif;
+}
+
+.card {
+  color: var(--clr-neutral-light);
+  background: rgba(255, 255, 255, 0.1);
+  background-size: cover;
+  box-shadow: 0px 15px 40px rgba(0, 0, 0, 0.6);
+  /* border: 1px solid rgba(255, 255, 255, 0.05); */
+  padding: 10rem 0 0;
+  max-width: 35ch;
+  border-radius: 1rem;
+  /* z-index: 10; */
+  backdrop-filter: blur(3.5px);
+  overflow: hidden;
+
+  transition: transform 500ms ease;
+}
+
+.card:hover,
+.card:focus-within {
+  transform: scale(1.05);
+}
+
+.card-content {
+  --padding: 1.5rem;
+  padding: var(--padding);
+  background: linear-gradient(
+    hsl(0 0% 0% / 0),
+    hsl(20 0% 0% / 0.2) 20%,
+    hsl(256 17% 27% / 0.8)
+  );
+  transform: translateY(65%);
+  transition: transform 500ms ease;
+}
+
+.card:hover .card-content,
+.card:focus-within .card-content {
+  transform: translateY(0);
+  transition-delay: 500ms;
+}
+
+.card:focus-within .card-content {
+  transition-duration: 0ms;
+}
+
+.card-content > *:not(.card-title) {
+  opacity: 0;
+  transition: opacity 500ms linear;
+}
+
+.card:hover .card-content > *:not(.card-title) {
+  opacity: 1;
+  transition-delay: 1000ms;
+}
+
+.card:focus-within .card-content > *:not(.card-title) {
+  opacity: 1;
+  transition-delay: 500ms;
+}
+
+.card-title {
+  position: relative;
+  width: max-content;
+}
+
+.card-title::after {
+  /* z-index: 15; */
+  content: "";
+  position: absolute;
+  height: 4px;
+  left: calc(var(--padding) * -1);
+  bottom: -3px;
+  width: calc(100% + var(--padding));
+  background: var(--clr-accent);
+
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform 500ms ease;
+}
+
+.card:hover .card-title::after,
+.card:focus-within .card-title:after {
+  transform: scaleX(1);
+}
+
+.card-body {
+  color: rgb(255, 255, 255 / 0.85);
+}
+
+.button {
+  cursor: pointer;
+  display: inline-block;
+  text-decoration: none;
+  color: var(--clr-neutral-dark);
+  background-color: var(--clr-accent);
+  padding: 0.5em 1.25em;
+  border-radius: 1em;
+}
+
+.button:hover,
+.button:focus {
+  background-color: var(--clr-neutral-light);
 }
