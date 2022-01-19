@@ -42,7 +42,7 @@ function makeSnow(x, y, dx, dy, radius, opacity) {
 
 let circleArray = [];
 
-for (let i = 0; i < 100; i++) {
+for (let i = 0; i < 300; i++) {
   let radius = Math.random() * 5;
   let x = Math.random() * (innerWidth - radius * 2) + radius;
   let y = Math.random() * (innerHeight - radius * 2) + radius;
