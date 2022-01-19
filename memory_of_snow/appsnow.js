@@ -5,6 +5,25 @@ canvas.height = window.innerHeight;
 
 let c = canvas.getContext("2d");
 
+let mouse = {
+  x: undefined,
+  y: undefined,
+};
+
+const maxRadius = 40;
+
+window.addEventListener("mousemove", function (event) {
+  mouse.x = event.x;
+  mouse.y = event.y;
+});
+
+window.addEventListener("resize", function () {
+  canvas.width = window.innerWidth;
+  canvas.height = window.innerHeight;
+
+  init();
+});
+
 // able to convert function makeSnow into class
 function makeSnow(x, y, dx, dy, radius, opacity) {
   this.x = x;
@@ -12,6 +31,7 @@ function makeSnow(x, y, dx, dy, radius, opacity) {
   this.dx = dx;
   this.dy = dy;
   this.radius = radius;
+  this.minRadius = radius;
   this.opacity = opacity;
 
   this.draw = function () {
@@ -36,20 +56,39 @@ function makeSnow(x, y, dx, dy, radius, opacity) {
     this.x += this.dx;
     this.y += this.dy;
 
+    // snow grows depending on the position of the mouse
+    if (
+      mouse.x - this.x < 50 &&
+      mouse.x - this.x > -50 &&
+      mouse.y - this.y < 50 &&
+      mouse.y - this.y > -50
+    ) {
+      if (this.radius < maxRadius) {
+        this.radius += 1;
+      }
+    } else if (this.radius > this.minRadius) {
+      // shrink to minRadius
+      this.radius -= 1;
+    }
+
     this.draw();
   };
 }
 
 let circleArray = [];
 
-for (let i = 0; i < 100; i++) {
-  let radius = Math.random() * 5;
-  let x = Math.random() * (innerWidth - radius * 2) + radius;
-  let y = Math.random() * (innerHeight - radius * 2) + radius;
-  let dx = Math.random() * 1 - 0.5;
-  let dy = Math.random() * 1 + 1;
-  let opacity = Math.random();
-  circleArray.push(new makeSnow(x, y, dx, dy, radius, opacity));
+function init() {
+  circleArray = [];
+
+  for (let i = 0; i < 100; i++) {
+    let radius = Math.random() * 5 + 1;
+    let x = Math.random() * (innerWidth - radius * 2) + radius;
+    let y = Math.random() * (innerHeight - radius * 2) + radius;
+    let dx = Math.random() * 1 - 0.5;
+    let dy = Math.random() * 1 + 1;
+    let opacity = Math.random();
+    circleArray.push(new makeSnow(x, y, dx, dy, radius, opacity));
+  }
 }
 
 function animate() {
@@ -61,7 +100,7 @@ function animate() {
   }
 }
 
+init();
 animate();
 
-// add mediaquery to make it responsive
-// depending on the size of the display, make less or more snow
+// will be nica to make a button to control number of snow
